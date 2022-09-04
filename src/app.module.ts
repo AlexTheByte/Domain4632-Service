@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
-import { TemperatureModule } from './temperatures/temperatures.module';
+import { RoomsModule } from './rooms/rooms.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/domain4632'),
-    TemperatureModule
+    RoomsModule
   ],
   controllers: [AppController],
   providers: [AppService],

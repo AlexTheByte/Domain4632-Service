@@ -1,3 +1,4 @@
+import { Room } from "./create-room.dto";
 
 class Temperature {
     date: string;
