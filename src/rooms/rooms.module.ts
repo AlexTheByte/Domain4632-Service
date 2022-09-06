@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RoomController } from './rooms.controller';
 import { RoomsService } from './rooms.service';
 import { Room, RoomSchema } from './schemas/room.schema';
-// import { RoomTemperature, RoomTemperatureSchema } from './schemas/temperatures.schema';
 import { Temperature, TemperatureSchema } from './schemas/temperatures.schema';
 
 @Module({

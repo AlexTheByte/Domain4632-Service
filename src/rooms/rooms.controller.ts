@@ -4,11 +4,14 @@ import { RoomsService } from './rooms.service';
 import { CreateRoomDto } from './dto/create-room.dto';
 import { Response } from 'express';
 import { CreateTemperaturesDto } from './dto/create-temperatures.dto';
+import { RoomPipe } from './rooms.pipe';
+import { Room } from './schemas/room.schema';
 
-@Controller('api/rooms')
+@Controller('/rooms')
 export class RoomController {
     constructor(private readonly roomsService: RoomsService) { }
 
+    // ROOMS
     @Get('/me')
     async findMe(@Query() query: { name: string }, @Res() res: Response) {
         const room = await this.roomsService.findMe(query.name);
@@ -16,8 +19,7 @@ export class RoomController {
     }
 
     @Get(':_id')
-    async findOne(@Param('_id') _id: string, @Res() res: Response) {
-        const room = await this.roomsService.findOne(_id);
+    async findOne(@Param('_id', RoomPipe) room: Room, @Res() res: Response) {
         res.status(HttpStatus.OK).json(room);
     }
 
@@ -33,20 +35,22 @@ export class RoomController {
         res.status(HttpStatus.CREATED).json(room);
     }
 
-    @Get(':_id/temperatures')
-    async findTemperatures(@Param('_id') _id: string, @Res() res: Response) {
-        const from = new Date("2022-09-04T19:42:26.595+00:00").toISOString();
-        const to = new Date("2022-09-08T19:42:26.595+00:00").toISOString()
-        const room = await this.roomsService.findOne(_id);
-        const temperatures = await this.roomsService.findTemperatures(room._id, from, to);
-        res.status(HttpStatus.CREATED).json(temperatures);
+    // TEMPERATURES
+    @Post(':_id/temperatures')
+    async createTemperatures(@Param('_id', RoomPipe) room: Room, @Body() createTemperatesDto: CreateTemperaturesDto, @Res() res: Response) {
+        this.roomsService.createTemperatures(room, createTemperatesDto.temperatures);
+        res.status(HttpStatus.CREATED).send();
     }
 
-    @Post(':_id/temperatures')
-    async createTemperatures(@Param('_id') _id: string, @Body() createTemperatesDto: CreateTemperaturesDto, @Res() res: Response) {
-        const room = await this.roomsService.findOne(_id);
-        this.roomsService.createTemperatures(room._id, createTemperatesDto.temperatures);
-        res.status(HttpStatus.CREATED).send();
+    @Get(':_id/temperatures')
+    async findTemperatures(@Param('_id', RoomPipe) room: Room, @Query() query: { from: string, to: string }, @Res() res: Response) {
+        // Get params
+        const from = new Date(query.from).toISOString();
+        const to = new Date(query.to).toISOString();
+
+        // Get temperatures
+        const temperatures = await this.roomsService.findTemperatures(room, from, to);
+        res.status(HttpStatus.OK).json(temperatures);
     }
 }
 

@@ -2,9 +2,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from "mongoose";
-import { Temperature, TemperatureDocument } from "./schemas/temperatures.schema";
+import { TemperatureDocument } from "./schemas/temperatures.schema";
 import { RoomInterface } from "./interfaces/room.interface";
 import { Room, RoomDocument } from "./schemas/room.schema";
+import { Temperature } from "./schemas/temperatures.schema";
+import { TemperatureInterface } from "./interfaces/temperature.interface";
 
 @Injectable()
 export class RoomsService {
@@ -45,8 +47,7 @@ export class RoomsService {
      * @returns the room created
      */
     async create(room: RoomInterface): Promise<Room> {
-        const createdRoom = new this.roomModel({ ...room });
-        return createdRoom.save();
+        return new this.roomModel({ ...room }).save();
     }
 
     /**
@@ -56,15 +57,8 @@ export class RoomsService {
      * @param to 
      * @returns 
      */
-    async findTemperatures(room_id, from: string, to: string) {
-        return await this.temperatureModel
-            .find({
-                room_id: room_id,
-                date: {
-                    $gte: from,
-                    $lte: to
-                }
-            });
+    async findTemperatures(room: Room, from: string, to: string): Promise<Temperature[]> {
+        return await this.temperatureModel.find({ room_id: room._id, date: { $gte: from, $lte: to } });
     }
 
     /**
@@ -73,12 +67,9 @@ export class RoomsService {
      * @param temperatures 
      * @returns the temperatures
      */
-    async createTemperatures(room_id, temperatures) {
-        temperatures.forEach(element => {
-            element.room_id = room_id;
-        });
+    async createTemperatures(room: Room, temperatures: TemperatureInterface[]): Promise<Temperature[]> {
+        temperatures.forEach((temperature: TemperatureInterface) => temperature.room_id = room._id);
+        
         return this.temperatureModel.insertMany(temperatures);
     }
 }
-
-
