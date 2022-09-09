@@ -13,9 +13,7 @@ services:
     container_name: domain4632-db
     image: mongo:latest
     volumes:
-      - /home/azureuser/domain4632-db:/data/db
-    ports:
-      - 27017:27017
+      - /data/domain4632-db:/data/db
     networks:
       - domain4632-network
     restart: always

@@ -4,11 +4,19 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RoomsModule } from './rooms/rooms.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://domain4632-db/domain4632'),
-    // MongooseModule.forRoot('mongodb://localhost/domain4632'),
+    ConfigModule.forRoot({ isGlobal: true }),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        uri: config.get<string>('MONGODB_URI')
+      })
+    }),
     RoomsModule
   ],
   controllers: [AppController],
