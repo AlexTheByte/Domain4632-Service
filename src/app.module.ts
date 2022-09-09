@@ -7,7 +7,8 @@ import { RoomsModule } from './rooms/rooms.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://localhost/domain4632'),
+    MongooseModule.forRoot('mongodb://domain4632-db/domain4632'),
+    // MongooseModule.forRoot('mongodb://localhost/domain4632'),
     RoomsModule
   ],
   controllers: [AppController],

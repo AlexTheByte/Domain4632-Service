@@ -1,7 +1,24 @@
 version: '3'
 
 services:
-  domain4632:
+  domain4632-api:
+    container_name: domain4632-api
     build: .
+    networks:
+      - domain4632-network
     ports:
       - 3000:3000
+
+  domain4632-db:
+    container_name: domain4632-db
+    image: mongo:latest
+    volumes:
+      - ./database:/data/db
+    ports:
+      - 27017:27017
+    networks:
+      - domain4632-network
+    restart: always
+
+networks:
+  domain4632-network:
