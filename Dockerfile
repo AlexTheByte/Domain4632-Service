@@ -1,9 +1,11 @@
 FROM node:12
 
-COPY . /home/node/app
+WORKDIR /usr/src/app
 
-WORKDIR /home/node/app
+COPY . .
 
 RUN npm install
 
-CMD [ "npm run start" ]
+RUN npm run build
+
+CMD [ "node", "dist/main.js" ]

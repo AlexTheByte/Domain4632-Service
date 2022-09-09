@@ -1,0 +1,12 @@
+Dockerfile
+docker-compose.yaml
+.dockerignore
+node_modules
+npm-debug.log
+dist
+.eclintrc.json
+.gitignore
+.prettierrc
+README.md
+tsconfig.build.json
+test
