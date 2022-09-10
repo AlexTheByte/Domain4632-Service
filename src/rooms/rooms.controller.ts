@@ -49,7 +49,7 @@ export class RoomController {
 
         // Get temperatures
         const temperatures = await this.roomsService.findTemperatures(room, from, to);
-        res.status(HttpStatus.OK).json(temperatures);
+        res.status(HttpStatus.OK).json({room, temperatures});
     }
 }
 
