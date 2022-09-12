@@ -1,18 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from "mongoose";
+import mongoose, { Model } from "mongoose";
 import { TemperatureDocument } from "./schemas/temperatures.schema";
 import { RoomInterface } from "./interfaces/room.interface";
 import { Room, RoomDocument } from "./schemas/room.schema";
 import { Temperature } from "./schemas/temperatures.schema";
 import { TemperatureInterface } from "./interfaces/temperature.interface";
+import { MetricsInterface } from "./interfaces/metrics.interface";
+import { Humidity, HumidityDocument } from "./schemas/humidity.schema";
+import { HumidityInterface } from "./interfaces/humidity.interface";
 
 @Injectable()
 export class RoomsService {
     constructor(
         @InjectModel(Room.name) private roomModel: Model<RoomDocument>,
-        @InjectModel(Temperature.name) private temperatureModel: Model<TemperatureDocument>
+        @InjectModel(Temperature.name) private temperatureModel: Model<TemperatureDocument>,
+        @InjectModel(Humidity.name) private humidityModel: Model<HumidityDocument>
     ) { }
 
     /**
@@ -51,7 +55,7 @@ export class RoomsService {
     }
 
     /**
-     * Return temperature related to the room depengind on the from and to parameters
+     * Return temperature related to the room dependind on the from and to parameters
      * @param room_id
      * @param from 
      * @param to 
@@ -62,14 +66,35 @@ export class RoomsService {
     }
 
     /**
+     * Return humidity related to the room dependind on the from and to parameters
+     * @param room_id
+     * @param from 
+     * @param to 
+     * @returns 
+     */
+     async findHumidities(room: Room, from: string, to: string): Promise<Humidity[]> {
+        return await this.humidityModel.find({ room_id: room._id, date: { $gte: from, $lte: to } });
+    }
+
+    /**
      * Create temperatures related to a room
      * @param room_id
      * @param temperatures 
      * @returns the temperatures
      */
-    async createTemperatures(room: Room, temperatures: TemperatureInterface[]): Promise<Temperature[]> {
-        temperatures.forEach((temperature: TemperatureInterface) => temperature.room_id = room._id);
+    // createTemperatures(room: Room, temperatures: TemperatureInterface[]): void {
+    //     temperatures.forEach((temperature: TemperatureInterface) => temperature.room_id = room._id);
         
-        return this.temperatureModel.insertMany(temperatures);
+    //     this.temperatureModel.insertMany(temperatures);
+    // }
+
+    /**
+     * Create temperature and humidity related to a room
+     * @param room 
+     * @param metrics 
+     */
+    createMetrics(room: Room, temperature: TemperatureInterface, humidity: HumidityInterface): void {
+        this.temperatureModel.create(temperature);
+        this.humidityModel.create(humidity);
     }
 }
