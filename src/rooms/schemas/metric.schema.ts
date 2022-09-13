@@ -3,10 +3,10 @@ import { Date, Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { Room } from './room.schema';
 
-export type HumidityDocument = Humidity & Document;
+export type MetricDocument = Metric & Document;
 
 @Schema()
-export class Humidity {
+export class Metric {
     _id: mongoose.ObjectId;
 
     @Prop({ type: mongoose.Schema.Types.ObjectId, ref: Room.name, required: true })
@@ -16,7 +16,10 @@ export class Humidity {
     date: Date;
 
     @Prop({ type: Number, required: true })
-    value: number;
+    t: number;
+
+    @Prop({ type: Number, required: true })
+    h: number;
 }
 
-export const HumiditySchema = SchemaFactory.createForClass(Humidity);
+export const MetricSchema = SchemaFactory.createForClass(Metric);

@@ -3,14 +3,12 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { RoomController } from './rooms.controller';
 import { RoomsService } from './rooms.service';
 import { Room, RoomSchema } from './schemas/room.schema';
-import { Temperature, TemperatureSchema } from './schemas/temperatures.schema';
-import { Humidity, HumiditySchema } from './schemas/humidity.schema';
+import { Metric, MetricSchema } from './schemas/metric.schema';
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Room.name, schema: RoomSchema }]),
-    MongooseModule.forFeature([{ name: Temperature.name, schema: TemperatureSchema }]),
-    MongooseModule.forFeature([{ name: Humidity.name, schema: HumiditySchema }]),
+    MongooseModule.forFeature([{ name: Metric.name, schema: MetricSchema }]),
   ],
   controllers: [RoomController],
   providers: [RoomsService],

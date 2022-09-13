@@ -8,7 +8,7 @@ class Metrics {
     h: number;
 }
 
-export class CreateMetricsDto {
+export class CreateMetricDto {
     @IsISO8601()
     date: Date;
 

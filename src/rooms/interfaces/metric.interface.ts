@@ -1,7 +1,8 @@
 import { ObjectId } from "mongoose";
 
-export interface HumidityInterface {
+export interface MetricInterface {
     room_id?: ObjectId;
     date: Date;
-    value: number;
+    t: number;
+    h: number;
 }
