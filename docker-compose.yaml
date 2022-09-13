@@ -29,8 +29,9 @@ services:
     command: npm run start:dev
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.whoami.rule=Host(`domain4632.francecentral.cloudapp.azure.com`)"
-      - "traefik.http.routers.whoami.entrypoints=web"
+      - "traefik.http.routers.domain4632api.rule=Host(`domain4632.francecentral.cloudapp.azure.com`)"
+      - "traefik.http.routers.domain4632api.entrypoints=web"
+      - "traefik.http.services.domain4632api.loadbalancer.server.port=3000"
 
   domain4632-db:
     container_name: domain4632-db
