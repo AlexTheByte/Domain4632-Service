@@ -1,20 +1,15 @@
 version: '3'
 
 services:
-  traefik:
-    image: "traefik:v2.8"
-    container_name: "traefik"
-    command:
-      #- "--log.level=DEBUG"
-      - "--api.insecure=true"
-      - "--providers.docker=true"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-    ports:
-      - "80:80"
-      - "8080:8080"
+  reverse-proxy:
+    image: nginx
+    container_name: reverse-proxy
     volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    networks:
+      - domain4632-network
 
   domain4632-api:
     container_name: domain4632-api
@@ -27,11 +22,6 @@ services:
       - 3000:3000
     working_dir: /usr/src/app
     command: npm run start:dev
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.domain4632api.rule=Host(`domain4632.francecentral.cloudapp.azure.com`)"
-      - "traefik.http.routers.domain4632api.entrypoints=web"
-      - "traefik.http.services.domain4632api.loadbalancer.server.port=3000"
 
   domain4632-db:
     container_name: domain4632-db
