@@ -14,7 +14,7 @@ export class RoomController {
     @Get('me')
     async findMe(@Query() query: { name: string }, @Res() res: Response) {
         const room = await this.roomsService.findMe(query.name);
-        res.status(HttpStatus.OK).json(room);
+        res.status(room ? HttpStatus.OK : HttpStatus.NOT_FOUND).json(room);
     }
 
     @Get(':_id')
