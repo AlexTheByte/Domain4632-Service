@@ -38,7 +38,7 @@ services:
     volumes: 
       - ./storage/certbot/conf:/etc/letsencrypt:rw
       - ./storage/certbot/www:/var/www/certbot:rw
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${EMAIL} -d ${DOMAIN}
+    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${EMAIL} -d ${DOMAIN} --agree-tos
 
 networks:
   domain4632-network:
