@@ -1,5 +1,6 @@
 config
 storage/db
+storage/certbot
 Dockerfile
 docker-compose.yaml
 .dockerignore

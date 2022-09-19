@@ -32,13 +32,13 @@ services:
       - domain4632-network
     restart: always
   
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes: 
-      - ./storage/certbot/conf:/etc/letsencrypt:rw
-      - ./storage/certbot/www:/var/www/certbot:rw
-    command: certonly --webroot -w /var/www/certbot --force-renewal --email ${EMAIL} -d ${DOMAIN} --agree-tos
+  # certbot:
+    # image: certbot/certbot
+    # container_name: certbot
+    # volumes: 
+    #   - ./storage/certbot/conf:/etc/letsencrypt:rw
+    #   - ./storage/certbot/www:/var/www/certbot:rw
+    # command: certonly --webroot -w /var/www/certbot --force-renewal --email ${EMAIL} -d ${DOMAIN} --agree-tos
 
 networks:
   domain4632-network:
