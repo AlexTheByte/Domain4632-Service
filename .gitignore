@@ -38,4 +38,4 @@ lerna-debug.log*
 .env
 
 # Storage
-storage/db/*
+/storage/db/*
