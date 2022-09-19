@@ -1,19 +1,33 @@
 version: '3'
 
 services:
-  domain4632-api:
-    container_name: domain4632-api
-    build: .
+  reverse-proxy:
+    image: nginx:latest
+    container_name: reverse-proxy
+    volumes:
+      - ./config/nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
     networks:
       - domain4632-network
-    ports:
-      - 3000:3000
+    restart: always
+
+  domain4632-api:
+    container_name: domain4632-api
+    build: 
+      context: .
+      dockerfile: ./config/Dockerfile
+    networks:
+      - domain4632-network
+    restart: always
 
   domain4632-db:
     container_name: domain4632-db
     image: mongo:latest
     volumes:
-      - /home/nex/data/db:/data/db
+      - ./storage/db:/data/db
+    ports:
+      - 27017:27017
     networks:
       - domain4632-network
     restart: always

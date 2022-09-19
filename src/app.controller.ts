@@ -8,13 +8,6 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    console.log('Test');
     return this.appService.getHello();
-  }
-
-  @Post()
-  test(@Body() req, @Res() res: Response) {
-    console.log(req);
-    res.status(HttpStatus.CREATED).json({t:req});
   }
 }

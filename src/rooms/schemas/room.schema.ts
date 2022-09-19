@@ -11,7 +11,7 @@ export class Room {
     @Prop({ default: Date.now })
     createdAt: Date;
 
-    @Prop()
+    @Prop({ unique: true })
     name: string;
 }
 

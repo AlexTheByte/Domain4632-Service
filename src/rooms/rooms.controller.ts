@@ -31,6 +31,7 @@ export class RoomController {
     @Post()
     async create(@Body() createRoomDto: CreateRoomDto, @Res() res: Response) {
         const room = await this.roomsService.create(createRoomDto);
+        console.log(createRoomDto);
         res.status(HttpStatus.CREATED).json(room);
     }
 
