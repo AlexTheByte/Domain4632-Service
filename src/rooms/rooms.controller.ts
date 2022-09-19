@@ -31,7 +31,6 @@ export class RoomController {
     @Post()
     async create(@Body() createRoomDto: CreateRoomDto, @Res() res: Response) {
         const room = await this.roomsService.create(createRoomDto);
-        console.log(createRoomDto);
         res.status(HttpStatus.CREATED).json(room);
     }
 
@@ -55,18 +54,3 @@ export class RoomController {
         res.status(HttpStatus.CREATED).send();
     }
 }
-
-
-
-
-// @Get(':id')
-// async findOne(@Query() query: { id: string }, @Res() res: Response) {
-//     if (query.id) {
-//         const room = await this.roomsService.findOne(query.id);
-//         res.status(HttpStatus.OK).json(room);
-//         return;
-//     }
-
-//     const rooms = await this.roomsService.findAll();
-//     res.status(HttpStatus.OK).json(rooms);
-// }
