@@ -10,6 +10,7 @@ services:
       - ./storage/certbot/www:/var/www/certbot:ro
     ports:
       - 80:80
+      - 443:443
     networks:
       - domain4632-network
     restart: always
