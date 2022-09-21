@@ -5,7 +5,7 @@ services:
     image: nginx:latest
     container_name: reverse-proxy
     volumes:
-      - ./storage/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./storage/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 80:80
     networks:

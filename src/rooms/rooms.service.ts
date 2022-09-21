@@ -37,7 +37,7 @@ export class RoomsService {
      * @returns all rooms
      */
     async findAll(): Promise<Room[]> {
-        return this.roomModel.find().exec();
+        return this.roomModel.find().sort('name');
     }
 
     /**
@@ -51,7 +51,7 @@ export class RoomsService {
 
     /**
      * Return temperatures and humidities related to the room dependind on the from and to parameters
-     * @param room_id
+     * @param room
      * @param from 
      * @param to 
      * @returns 
@@ -64,7 +64,7 @@ export class RoomsService {
      * Create temperature and humidity related to a room
      * @param metric
      */
-    createMetrics(metric: MetricInterface): void {
-        this.metricModel.create(metric);
+    async createMetrics(metric: MetricInterface): Promise<Metric> {
+        return new this.metricModel({ ...metric }).save();
     }
 }

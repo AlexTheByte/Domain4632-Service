@@ -20,6 +20,9 @@ export class Metric {
 
     @Prop({ type: Number, required: true })
     h: number;
+
+    @Prop({ type: Date, default: Date.now })
+    createdAt: Date;
 }
 
 export const MetricSchema = SchemaFactory.createForClass(Metric);

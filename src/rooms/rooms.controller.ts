@@ -30,8 +30,15 @@ export class RoomController {
 
     @Post()
     async create(@Body() createRoomDto: CreateRoomDto, @Res() res: Response) {
-        const room = await this.roomsService.create(createRoomDto);
-        res.status(HttpStatus.CREATED).json(room);
+        let room = await this.roomsService.findMe(createRoomDto.name);
+        
+        if (room !== null) {
+            res.status(HttpStatus.FORBIDDEN).send();
+            return;
+        }
+
+        room = await this.roomsService.create(createRoomDto);
+        res.status(room ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR).json(room);
     }
 
     // TEMPERATURES & HUMIDITIES
@@ -49,8 +56,8 @@ export class RoomController {
     @Post(':_id/metrics')
     async createMetrics(@Param('_id', RoomPipe) room: Room, @Body() createMetricsDto: CreateMetricDto, @Res() res: Response) {
         const metrics = {room_id: room._id, date: createMetricsDto.date, t: createMetricsDto.data.t, h: createMetricsDto.data.h};
-        this.roomsService.createMetrics(metrics);
+        const metricsSaved = await this.roomsService.createMetrics(metrics);
         
-        res.status(HttpStatus.CREATED).send();
+        res.status(metricsSaved ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR).send();
     }
 }

@@ -8,11 +8,11 @@ export type RoomDocument = Room & Document;
 export class Room {
     _id: ObjectId;
 
-    @Prop({ default: Date.now })
-    createdAt: Date;
-
     @Prop({ unique: true })
     name: string;
+
+    @Prop({ type: Date, default: Date.now })
+    createdAt: Date;
 }
 
 export const RoomSchema = SchemaFactory.createForClass(Room);
