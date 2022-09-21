@@ -60,11 +60,12 @@ export class RoomsService {
         return await this.metricModel.find({ room_id: room._id, date: { $gte: from, $lte: to } }).sort('date');
     }
 
+
     /**
      * Create temperature and humidity related to a room
-     * @param metric
+     * @param metrics
      */
-    async createMetrics(metric: MetricInterface): Promise<Metric> {
-        return new this.metricModel({ ...metric }).save();
+     async createMetrics(metrics: MetricInterface[]): Promise<Metric[]> {
+        return this.metricModel.insertMany(metrics);
     }
 }

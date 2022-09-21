@@ -54,8 +54,8 @@ export class RoomController {
     }
 
     @Post(':_id/metrics')
-    async createMetrics(@Param('_id', RoomPipe) room: Room, @Body() createMetricsDto: CreateMetricDto, @Res() res: Response) {
-        const metrics = {room_id: room._id, date: createMetricsDto.date, t: createMetricsDto.data.t, h: createMetricsDto.data.h};
+    async createMetrics(@Param('_id', RoomPipe) room: Room, @Body() createMetricsDto: CreateMetricDto[], @Res() res: Response) {
+        const metrics = createMetricsDto.map((createMetricsDto) => ({room_id: room._id, date: createMetricsDto.date, t: createMetricsDto.data.t, h: createMetricsDto.data.h}));
         const metricsSaved = await this.roomsService.createMetrics(metrics);
         
         res.status(metricsSaved ? HttpStatus.CREATED : HttpStatus.INTERNAL_SERVER_ERROR).send();
