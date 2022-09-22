@@ -6,6 +6,7 @@ services:
     container_name: reverse-proxy
     volumes:
       - ./storage/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./storage/nginx/.htpasswd:/etc/nginx/.htpasswd:ro
       - ./storage/certbot/conf:/etc/letsencrypt:ro
       - ./storage/certbot/www:/var/www/certbot:ro
     ports:
