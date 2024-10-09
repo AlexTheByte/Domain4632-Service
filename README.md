@@ -1,7 +1,7 @@
 <div style="text-align: justify;">
 <div style="display: flex; align-items: center; justify-content: space-between;">
     <h1>Domain 4632 Project</h1>
-    <img src="./docs/domain.jpeg" alt="CycloOwlIcon" width="100"/>
+    <img src="./docs/domain.jpeg" alt="Domain4632" width="100"/>
 </div>
 
 ## Project Description
