@@ -7,7 +7,7 @@ import { RoomPipe } from './rooms.pipe';
 import { Room } from './schemas/room.schema';
 
 @Controller('/rooms')
-export class RoomController {
+export class RoomsController {
     constructor(private readonly roomsService: RoomsService) { }
 
     // ROOMS
