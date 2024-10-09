@@ -1,3 +1,2 @@
-nginx/nginx.conf
 db/*
 certbot/*

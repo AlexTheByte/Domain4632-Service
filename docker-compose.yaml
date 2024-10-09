@@ -13,9 +13,12 @@ services:
 
   domain4632-api:
     container_name: domain4632-api
-    image: node:12
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - .:/usr/src/app
+      - /usr/src/app/node_modules
     networks:
       - domain4632-network
     ports:

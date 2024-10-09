@@ -2,10 +2,7 @@ FROM node:12
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY ./package.json ./package.json
+COPY ./package-lock.json ./package-lock.json
 
 RUN npm install
-
-RUN npm run build
-
-CMD [ "node", "dist/main.js" ]
